@@ -1,0 +1,77 @@
+sfSmart3ViewPlugin
+==================
+This plugin integrates smarty 3 ([www.smarty.net][smartylink]) as a configurable view
+layer into symfony.
+
+It relies in some aspects on ideas found in sfSmartyPlugin
+([www.symfony-project.org/plugins/sfSmartyPlugin][sfsmartyplugin]) but has been completely
+re-written to fit the "new" [smarty 3 templating engine][smartylink].
+
+**Warning No. 1**: This plugin has not yet been tested in a production environment. It
+is a case study to give smarty 3 a chance, but during developement many
+edge-cases occured which *in my opinion* proved that the smarty core has some
+serious deficits in design so that is does not really fit into a
+"modern web-mvc-framework" environment.
+
+Please read this ([http://nosmarty.net/][nosmartylink]) for further information about that.
+
+**Warning No. 2**: Smarty 3 is not yet officially released, currently the RC 1
+version of Smarty 3 is beeing tested.
+
+Feel free to use the plugin and modify it's code in any way, improve the symfony
+helper integration, write own smarty-style helpers and so on,  in short: try
+to have fun with smarty ;)
+
+Smarty documentation and smarty 3 may be downloaded here: [www.smarty.net][smartylink]
+
+Installation
+------------
+
+Install the plugin via symfony's build in [plugin:install task][plugininstalltaskdoc] or download a full
+development sandbox from [github][github] ([http://github.com/joshiausdemwald/sfSmarty3Plugin][githubproject]).
+
+    $ symfony plugin:install sfSmarty3Plugin
+
+Configuration
+-------------
+
+The plugin is configured by an environment aware config/settings.yml and a
+config/autoload.yml file which specifies the Smarty 3 library directory path.
+
+In general you don't have to change this path unless you extract the Smarty3-files
+into project_folder/lib/vendor/smarty.
+
+To enable smarty to replace the original symfony PHP-view layer, you have to
+create a module.yml configuration file in project_folder/apps/application_name/config/module.yml:
+
+project_folder/apps/application_name/config/module.yml:
+-------------------------------------------------------
+
+    default:  # For all environments
+      enabled:            true
+      is_internal:        false
+      view_class:         sfSmarty
+      partial_view_class: sfSmarty
+
+These few lines enable Smarty as a symfony templating engine. Note that all smarty
+templates must end with ".tpl" instead of ".php", e.g. layout.php => layout.tpl,
+_my_partial.php => my_partial.tpl, indexSuccess.php => indexSuccess.tpl and so on.
+
+There is a fallback that automagically will use symfony's own sfPhpView class for
+parsing templates that ends on ".php", so you are allowed to use both formats
+parallel.
+
+It is even possible to use plain php code within a smarty template by using
+<?php ?> as a delimiter, thanks to smarty 3 "improvements" ;).
+
+Use plugin/sfSmarty3Plugin/config/settings.yml to tweak your smarty3
+configuration (respectively overwrite these settings in your
+project_folder/apps/app_name/config/settings.yml). By doing so you are able
+to define the default cache behaviour of smarty, for example.
+
+[sfsmartyplugin]: http://www.symfony-project.org/plugins/sfSmartyPlugin "www.symfony-project.org/plugins/sfSmartyPlugin"
+[smartylink]: http://smarty.net "www.smarty.net"
+[nosmartylink]: http://nosmarty.net/ "http://nosmarty.net"
+[github]: http://github.com/ "http://github.com"
+[githubproject]: http://github.com/joshiausdemwald/sfSmarty3Plugin "http://github.com/joshiausdemwald/sfSmarty3Plugin"
+[plugininstalltaskdoc]: http://www.symfony-project.org/reference/1_4/en/16-Tasks#chapter_16_sub_plugin_install "plugin:install task"

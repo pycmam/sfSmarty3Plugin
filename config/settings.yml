@@ -1,0 +1,72 @@
+dev:
+  smarty:
+    force_compile: false
+    compile_check: true
+    caching: false
+    
+    # display error on not assigned variables
+    error_unassigned: true
+
+    display_debug_console: false
+
+prod:
+  smarty:
+    caching: false
+
+all:
+  smarty:
+
+    lib_dir: <?php echo sfConfig::get('sf_lib_dir') . '/vendor/smarty' . "\n";?>
+
+    # ONE OF THE SMARTY_PHP_*-CONSTANTS, REFER TO Smarty.class.php FOR FURTHER INFORMATION
+    php_handling: 3
+
+    # SET TO TRUE TO ALLOW THE OLD STYLE {PHP}echo 'Hello world!'{/PHP}-Tag
+    allow_php_tag: false
+
+    allow_php_templates: true
+
+    compile_check: false
+
+    force_compile: false
+
+    # display error on not assigned variables
+    error_unassigned: false
+
+    # caching enabled
+    caching: false
+
+    # force cache file even after expiring
+    force_cache: false
+
+    # cache lifetime
+    cache_lifetime: 3600
+
+    ############ NOTHING MUST BE CHANGED BELOW THIS LINE
+    
+    # Change to e.g. "MySmarty to implement additional functionalities/default
+    # options.
+    # See autoload.yml
+    smarty_class: sfSmarty
+
+    # Auto-configuration. Disable to gain a small performance advantage
+    auto_config: true
+    auto_config_file_name: smarty.conf
+
+    config_directories:
+      - <?php echo sfConfig::get('sf_app_config_dir') . '/smarty' . "\n"?>
+      - <?php echo sfConfig::get('sf_config_dir') . '/smarty' . "\n"?>
+
+    # Cache and compile directory
+    compile_directory: <?php echo sfConfig::get('sf_app_cache_dir') . '/smarty/templates_c' . "\n"?>
+    cache_directory: <?php echo sfConfig::get('sf_app_cache_dir') . '/smarty/cache' . "\n"?>
+
+    # Resource settings, see pluginConfiguration.class.php
+    resource_charset: utf-8
+    recource_date_format: %b %e, %Y
+
+    # template delimiters
+    left_delimiter: '{'
+    right_delimiter: '}'
+
+    display_debug_console: false
